@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'description' => $this->faker->realText(100),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password = password
             'code_2fa' => Str::random(5),
-            'security_token' => Str::random(20),
+            'remember_token' => Str::random(20),
         ];
     }
 

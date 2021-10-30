@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\PostSeeder;
 use Database\Seeders\LikeSeeder;
-use Database\Seeders\ReplySeeder;
+use Database\Seeders\CommentSeeder;
 use Database\Seeders\FollowerSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PostSeeder::class,
             LikeSeeder::class,
-            ReplySeeder::class,
+            CommentSeeder::class,
             FollowerSeeder::class
         ]);
     }

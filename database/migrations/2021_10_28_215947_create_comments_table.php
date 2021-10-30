@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 use App\Models\User;
 
-class CreateRepliesTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,11 @@ class CreateRepliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('replies', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->integer('post_id');
             $table->foreignIdFor(User::class);
-            $table->text('reply_content');
+            $table->text('comment_content');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateRepliesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('replies');
+        Schema::dropIfExists('comments');
     }
 }
