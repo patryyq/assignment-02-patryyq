@@ -3,7 +3,7 @@ This project is a year 3 assignment for Advanced Web Programming.
 
 
 ## Installation
-The following installation steps assume you are using XAMPP or a similar environment. For proper functionality, PHP 7+ and a MySQL database are required.
+The following installation steps assume you are using XAMPP or a similar environment. For proper functionality, PHP 8 and a MySQL database are required.
 
 ### 1. Clone the repo
 ```

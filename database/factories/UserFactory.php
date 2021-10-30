@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class UserFactory extends Factory
 {
@@ -12,14 +13,20 @@ class UserFactory extends Factory
      *
      * @return array
      */
+
+    protected $model = User::class;
+
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'nickname' => $this->faker->unique()->firstName() . '_'  . Str::random(5),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'avatar_path' => 'path/to/image.jpg',
+            'description' => $this->faker->realText(100),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password = password
+            'code_2fa' => Str::random(5),
+            'security_token' => Str::random(20),
         ];
     }
 
