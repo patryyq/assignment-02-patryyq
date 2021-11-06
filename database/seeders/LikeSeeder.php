@@ -8,7 +8,7 @@ use App\Models\Like;
 
 class LikeSeeder extends Seeder
 {
-    protected $numberOfLikesToSeed = 500;
+    protected $numberOfLikesToSeed = 800;
 
     public function run()
     {

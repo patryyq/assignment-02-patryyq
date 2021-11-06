@@ -1,0 +1,20 @@
+.pagination{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+i{
+    font-size:2rem;
+    cursor:pointer;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-size:1.4rem;
+}
+
+ul {
+    list-style-type: none;
+}
