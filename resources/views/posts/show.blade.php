@@ -35,8 +35,8 @@
         </div>
         <div class="p-3 bg-light">{{ $post->post_content }}</div>
         @if (Auth::check() && ($post->user_id === Auth::id() || Auth::user()->admin_role == 1))
-        <form class="d-flex justify-content-end mt-2" action="{{ route('post.destroy', $post->id) }}" method="POST">
-            <a class="mx-2 btn-primary btn" href="{{ route('post.edit', $post->id) }}">Edit</a>
+        <form class="d-flex justify-content-end mt-2" action="{{ route('posts.destroy', $post->id) }}" method="POST">
+            <a class="mx-2 btn-primary btn" href="{{ route('posts.edit', $post->id) }}">Edit</a>
 
             @csrf
             @method('DELETE')

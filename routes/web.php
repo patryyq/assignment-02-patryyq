@@ -16,4 +16,4 @@ Route::resource('posts', PostController::class);
 Route::get('/post/{post}', [PostController::class, 'show']);
 Route::resource('comment', CommentController::class);
 Route::get('/', [PostController::class, 'index'])->name('home');
-Route::get('user/{user}', [PostController::class, 'userPosts']);
+Route::get('/user/{user}', [PostController::class, 'userPosts']);

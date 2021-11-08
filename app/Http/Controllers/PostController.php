@@ -68,7 +68,7 @@ class PostController extends Controller
         ]);
 
         $post = Post::create($request->all());
-        return redirect('/posts/' . strval($post->id));
+        return redirect('/post/' . strval($post->id));
         //    ->with('success', 'msg');
     }
 
@@ -96,7 +96,7 @@ class PostController extends Controller
         ]);
 
         $post->update($request->all());
-        return redirect('/posts/' . strval($post->id));
+        return redirect('/post/' . strval($post->id));
         //     ->with('success', 'msg');
     }
 }
