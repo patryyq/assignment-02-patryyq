@@ -10,27 +10,16 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index($nickname = null)
+    public function index()
     {
-        $usr = User::where('nickname', '=', $nickname)->first() ?? false;
-        if ($usr) {
-            $posts = Post::orderBy('posts.id', 'desc')
-                ->with(['like' => function ($like) {
-                    $like->where('user_id', '=', Auth::id());
-                }])
-                ->where('user_id', '=', $usr->id)
-                ->withCount(['like'])
-                ->paginate(10);
-        } else {
-            $posts = Post::orderBy('posts.id', 'desc')
-                ->with(['like' => function ($like) {
-                    $like->where('user_id', '=', Auth::id());
-                }])
-                ->withCount(['like'])
-                ->paginate(10);
-        }
+        $title = 'Latest';
 
-        $title = $nickname === null ? 'New' : $nickname;
+        $posts = Post::orderBy('posts.id', 'desc')
+            ->with(['like' => function ($like) {
+                $like->where('user_id', '=', Auth::id());
+            }])
+            ->withCount(['like'])
+            ->paginate(10);
 
         return view('posts.main', [
             'posts' => $posts,
@@ -38,6 +27,24 @@ class PostController extends Controller
         ]);
     }
 
+    public function userPosts($nickname = null)
+    {
+        $usr = User::where('nickname', '=', $nickname)->first() ?? false;
+        if (!$usr) return redirect('/');
+
+        $posts = Post::orderBy('posts.id', 'desc')
+            ->with(['like' => function ($like) {
+                $like->where('user_id', '=', Auth::id());
+            }])
+            ->where('user_id', '=', $usr->id)
+            ->withCount(['like'])
+            ->paginate(10);
+
+        return view('posts.main', [
+            'posts' => $posts,
+            'title' => $nickname
+        ]);
+    }
     public function show(Post $post)
     {
         $post->with(['like' => function ($like) {
