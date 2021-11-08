@@ -20,14 +20,14 @@ use Illuminate\Support\Facades\Auth;
 </head>
 
 <body>
-    <div class="text-white bg-info pt-2 mb-4">
+    <div class="text-white bg-info pt-2">
         <section class="pageHeader">
             <div class="container mx-auto col-12 col-xl-6">
                 <h1>Twitter-like</h1>
             </div>
         </section>
 
-        <ul class="container mx-auto navbar col-12 col-xl-6">
+        <ul class="container mx-auto navbar col-12 col-xl-6 mb-0">
             <li><a href="/">Home Feed</a></li>
             @if (Auth::guest())
             <li><a href="/login">Login</a></li>
@@ -38,9 +38,21 @@ use Illuminate\Support\Facades\Auth;
             @endif
         </ul>
     </div>
-    <section class="pageTitle mx-auto col-12 col-xl-6">
-        <div class="container mx-auto">
-            <h2 class="mb-5">@yield('title')</h2>
+    <section id="titleSection" class="pageTitle mx-auto col-12 py-4 bg-light border-bottom">
+        <div class="container mx-auto col-xl-6 d-flex flex-row justify-content-between align-items-center">
+            <h2 class="mb-0 py-0">@yield('title')</h2>
+            @if (isset($following))
+            <div class="p-3 position-relative">
+                @if (isset($following->id))
+                <button id="{{ $user->id }}" type="button" class="btn btn-dark follow @if(Auth::guest())guest @endif">Following</button>
+                @else
+                <button id="{{ $user->id }}" type="button" class="btn btn-outline-dark follow @if(Auth::guest())guest @endif">Follow</button>
+                @endif
+                <span class="position-absolute bottom-0 right-0 translate-middle badge rounded-pill bg-danger">
+                    {{ $user->followed->count() }}
+                </span>
+            </div>
+            @endif
         </div>
     </section>
 

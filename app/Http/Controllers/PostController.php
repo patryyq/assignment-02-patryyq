@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Follower;
 use Illuminate\Http\Request;
 
 
@@ -12,7 +13,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $title = 'Latest';
+        $title = 'Latest posts';
 
         $posts = Post::orderBy('posts.id', 'desc')
             ->with(['like' => function ($like) {
@@ -31,7 +32,7 @@ class PostController extends Controller
     {
         $usr = User::where('nickname', '=', $nickname)->first() ?? false;
         if (!$usr) return redirect('/');
-
+        $following = Follower::where('user_id', '=', Auth::id())->where('followed_user_id', '=', $usr->id)->first() ?? false;
         $posts = Post::orderBy('posts.id', 'desc')
             ->with(['like' => function ($like) {
                 $like->where('user_id', '=', Auth::id());
@@ -42,7 +43,9 @@ class PostController extends Controller
 
         return view('posts.main', [
             'posts' => $posts,
-            'title' => $nickname
+            'title' => $nickname,
+            'user' => $usr,
+            'following' => $following
         ]);
     }
     public function show(Post $post)

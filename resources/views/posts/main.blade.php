@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $title . ' posts')
+@section('title', $title)
 
 @section('content')
 <?php
@@ -8,7 +8,12 @@
 // echo var_dump($posts);
 // echo '</pre>';
 ?>
-<div>
+@if (isset($user))
+<div class="p-3 bg-light mb-5"><b>About {{$user->nickname}}:</b><br>
+    <blockquote class="blockquote">"{{$user->description}}"</blockquote>
+</div>
+@endif
+<div class="mt-5">
     @if (Auth::check() && $title == Auth::user()->nickname)
     <form action="/posts" method="POST">
         @csrf
@@ -69,5 +74,6 @@
     @endforeach
 </div>
 <script src="/js/like.js"></script>
+<script src="/js/follower.js"></script>
 {!! $posts->links() !!}
 @endsection
