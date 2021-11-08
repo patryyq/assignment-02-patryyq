@@ -1,5 +1,4 @@
 <?php
-// this class is from Adding authentication.docx - available in Week 5 practical
 
 namespace App\Http\Controllers;
 

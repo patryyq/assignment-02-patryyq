@@ -11,7 +11,20 @@ use Illuminate\Support\Facades\Auth;
 class Comment extends Model
 {
     use HasFactory;
-    // public $timestamps = false;
+    protected $fillable = [
+        'post_id',
+        'user_id',
+        'comment_content'
+    ];
+
+    protected static function booted()
+    {
+        static::creating(function ($comment) {
+            if (Auth::id()) {
+                $comment->user_id = Auth::id();
+            }
+        });
+    }
 
     public function post()
     {

@@ -6,15 +6,28 @@
 }
 
 i{
-    font-size:2rem;
+    font-size:1.8rem;
     cursor:pointer;
+    color:black;
 }
 
-.navbar a {
+a {
     text-decoration: none;
-    font-size:1.4rem;
 }
 
 ul {
     list-style-type: none;
+}
+
+.navbar a {
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+h5 a {
+    font-size:1.2rem;
+}
+
+.badge {
+    font-size:0.7rem;
 }

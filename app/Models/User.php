@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Post;
 use App\Models\Like;
+use App\Models\Comment;
 
 class User extends Authenticatable
 {
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'nickname',
         'email',
         'password',
+        'admin_role'
     ];
 
     /**
@@ -52,5 +54,10 @@ class User extends Authenticatable
     public function like()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

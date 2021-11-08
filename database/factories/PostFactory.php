@@ -16,7 +16,7 @@ class PostFactory extends Factory
             'user_id' => function () {
                 return User::all()->random();
             },
-            'post_content' => $this->faker->realText(500)
+            'post_content' => $this->faker->realText(random_int(200, 700))
         ];
     }
 }

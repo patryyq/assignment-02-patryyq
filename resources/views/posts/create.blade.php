@@ -3,7 +3,7 @@
 @section('title', 'Add post')
 
 @section('content')
-<form action="{{ route('add-post') }}" method="POST">
+<form action="/posts" method="POST">
     @csrf
     <div class="my-10">
         <label for="post_content">Post:</label>

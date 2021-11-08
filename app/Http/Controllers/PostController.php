@@ -4,36 +4,48 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
 
 class PostController extends Controller
 {
-    public function index()
+    public function index($nickname = null)
     {
-        $posts = Post::orderBy('posts.id', 'desc')
-            ->with(['user', 'like' => function ($like) {
-                $like->where('user_id', '=', Auth::id());
-            }])
-            ->withCount(['like'])
-            ->paginate(10);
+        $usr = User::where('nickname', '=', $nickname)->first() ?? false;
+        if ($usr) {
+            $posts = Post::orderBy('posts.id', 'desc')
+                ->with(['like' => function ($like) {
+                    $like->where('user_id', '=', Auth::id());
+                }])
+                ->where('user_id', '=', $usr->id)
+                ->withCount(['like'])
+                ->paginate(10);
+        } else {
+            $posts = Post::orderBy('posts.id', 'desc')
+                ->with(['like' => function ($like) {
+                    $like->where('user_id', '=', Auth::id());
+                }])
+                ->withCount(['like'])
+                ->paginate(10);
+        }
+
+        $title = $nickname === null ? 'New' : $nickname;
 
         return view('posts.main', [
-            'posts' => $posts
+            'posts' => $posts,
+            'title' => $title
         ]);
     }
 
     public function show(Post $post)
     {
-        $posts = Post::where('id', '=', $post->id)
-            ->with(['user', 'like' => function ($like) {
-                $like->where('user_id', '=', Auth::id());
-            }])
-            ->withCount(['like'])
-            ->first();
+        $post->with(['like' => function ($like) {
+            $like->where('user_id', '=', Auth::id());
+        }])->first();
 
         return view('posts.show', [
-            'posts' => $posts
+            'post' => $post
         ]);
     }
 
@@ -48,10 +60,9 @@ class PostController extends Controller
             'post_content' => 'required'
         ]);
 
-        Post::create($request->all());
-
-        return redirect('/posts');
-        //    ->with('success', 'Signing created successfully.');
+        $post = Post::create($request->all());
+        return redirect('/posts/' . strval($post->id));
+        //    ->with('success', 'msg');
     }
 
     public function edit(Post $post)
@@ -63,10 +74,11 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $userNickname = $post->user->nickname;
         $post->delete();
 
-        return redirect('/posts')
-            ->with('success', 'Signing deleted successfully');
+        return redirect('/user/' . $userNickname);
+        //    ->with('success', 'msg');
     }
 
 
@@ -77,8 +89,7 @@ class PostController extends Controller
         ]);
 
         $post->update($request->all());
-
-        return redirect('/posts')
-            ->with('success', 'Signing updated successfully');
+        return redirect('/posts/' . strval($post->id));
+        //     ->with('success', 'msg');
     }
 }

@@ -20,7 +20,7 @@ class CommentFactory extends Factory
             'user_id' => function () {
                 return User::all()->random();
             },
-            'comment_content' => $this->faker->realText(150)
+            'comment_content' => $this->faker->realText(random_int(20, 300))
         ];
     }
 }

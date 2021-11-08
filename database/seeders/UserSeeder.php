@@ -12,11 +12,18 @@ class UserSeeder extends Seeder
         User::factory()
             ->count(1)
             ->create([
-                'email' => 'admin@email.com'
+                'email' => 'admin@email.com',
+                'admin_role' => '1'
             ]);
 
         User::factory()
-            ->count(40)
+            ->count(1)
+            ->create([
+                'email' => 'user@email.com',
+            ]);
+
+        User::factory()
+            ->count(38)
             ->create();
     }
 }

@@ -1,18 +1,23 @@
 function likePost(event) {
-    if (event.target.classList.contains('like')) {
-        const url = '/post/' + event.target.id + '/like'
-        fetch(url)
+    const targetClassList = event.target.classList
+    if (targetClassList.contains('like') &&
+        !targetClassList.contains('guest')) {
+        const url = '/like/' + event.target.id
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content')
+        fetch(url, { method: 'POST', headers: { 'X-CSRF-Token': csrfToken } })
             .then(response => {
                 const status = response.status
-                const badge = event.target.parentElement.children[0].children[0]
+                const badge = event.target.nextElementSibling
                 if (status === 201) {
                     event.target.classList.replace('far', 'fas')
-                    badge.innerText = parseInt(badge.innerText) + 1
+                    badge.innerHTML = parseInt(badge.innerHTML) + 1
                 } else if (status === 202) {
                     event.target.classList.replace('fas', 'far')
-                    badge.innerText = parseInt(badge.innerText) - 1
+                    badge.innerHTML = parseInt(badge.innerHTML) - 1
                 }
             })
+    } else if (targetClassList.contains('guest')) {
+        console.log('log in first pop up')
     }
 }
 
