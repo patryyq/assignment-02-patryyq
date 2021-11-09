@@ -29,11 +29,11 @@ use Illuminate\Support\Facades\Auth;
 
         <ul class="container mx-auto navbar col-12 col-xl-6 mb-0">
             <li><a href="/">Home Feed</a></li>
+            <li><a href="/explore">Explore</a></li>
             @if (Auth::guest())
             <li><a href="/login">Login</a></li>
             @else
             <li><a href="/user/{{ Auth::user()->nickname }}">Posts</a></li>
-            <!-- <li><a href="/user/{{ Auth::user()->nickname }}">Comments</a></li> -->
             <li><a href="/logout">Logout</a></li>
             @endif
         </ul>

@@ -14,11 +14,15 @@ class PostController extends Controller
     public function index()
     {
         $title = 'Latest posts';
+        (Auth::check()) ?
+            $usersToDisplayInFeed = Follower::where('user_id', '=', Auth::id())->get('followed_user_id') :
+            $usersToDisplayInFeed = Follower::get('followed_user_id');
 
         $posts = Post::orderBy('posts.id', 'desc')
             ->with(['like' => function ($like) {
                 $like->where('user_id', '=', Auth::id());
             }])
+            ->whereIn('user_id', $usersToDisplayInFeed)
             ->withCount(['like'])
             ->paginate(10);
 
@@ -32,6 +36,7 @@ class PostController extends Controller
     {
         $usr = User::where('nickname', '=', $nickname)->first() ?? false;
         if (!$usr) return redirect('/');
+
         $following = Follower::where('user_id', '=', Auth::id())->where('followed_user_id', '=', $usr->id)->first() ?? false;
         $posts = Post::orderBy('posts.id', 'desc')
             ->with(['like' => function ($like) {

@@ -8,7 +8,7 @@ use App\Models\Follower;
 
 class FollowerSeeder extends Seeder
 {
-    protected $numberOfFollowersToSeed = 500;
+    protected $numberOfFollowersToSeed = 1000;
 
     public function run()
     {

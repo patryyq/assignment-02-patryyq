@@ -18,7 +18,6 @@ function followUser(event) {
                     badge.innerHTML = parseInt(badge.innerHTML) - 1
                 }
             })
-        console.log('followed')
     } else if (targetClassList.contains('guest')) {
         console.log('log in first pop up')
     }
@@ -26,3 +25,6 @@ function followUser(event) {
 
 const titleSection = document.getElementById('titleSection')
 titleSection.addEventListener('click', followUser)
+
+const explore = document.getElementById('explore')
+explore.addEventListener('click', followUser)
