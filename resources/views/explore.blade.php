@@ -6,10 +6,10 @@
 
 <div class="mt-4">
     <div class="mb-3">
-        <div class="d-flex flex-row col-12 justify-content-between align-items-center px-3">
-            <div id="explore" class="p-3 align-items-center col-12">
+        <div class="col-12">
+            <div id="explore" class="d-flex flex-wrap flex-row p-3 align-items-center col-12">
                 @foreach ($users as $user)
-                <div class="position-relative mb-3 border d-flex flex-row justify-content-between align-items-center px-3">
+                <div class="position-relative mb-3 border d-flex flex-row justify-content-between align-items-center px-3 col-12">
                     <a href="/user/{{$user->nickname }}">{{$user->nickname}} </a>
                     <div class="d-flex align-items-center">
                         <div class="p-3 position-relative">
