@@ -1,20 +1,19 @@
 @extends('layouts.app')
-
 @section('title', $title)
-
 @section('content')
-<?php
-// echo '<pre>';
-// echo var_dump($posts);
-// echo '</pre>';
-?>
+
 @if (isset($user))
-<div class="p-3 bg-light mb-5"><b>About {{$user->nickname}}:</b><br>
+<div class="p-3 bg-light mb-5"><b>About {{$user->username}}:</b><br>
     <blockquote class="blockquote">"{{$user->description}}"</blockquote>
 </div>
 @endif
 <div class="mt-5">
-    @if (Auth::check() && $title == Auth::user()->nickname)
+    @if(session()->has('success'))
+    <div class="alert alert-warning" role="alert">
+        {{ session()->get('success') }}
+    </div>
+    @endif
+    @if (Auth::check() && $title == Auth::user()->username)
     <form action="/posts" method="POST">
         @csrf
         <div class="p-4 mb-5 form-group bg-light border">
@@ -36,7 +35,7 @@
     <div class="mb-5 border">
         <div class="d-flex flex-row col-md-12 bg-info justify-content-between align-items-center px-3">
             <div class="p-3 align-items-center">
-                <h5 class="m-0 p-0">&#64;<a href="/user/{{ $post->user->nickname }}">{{ $post->user->nickname }}</a>,
+                <h5 class="m-0 p-0">&#64;<a href="/user/{{ $post->user->username }}">{{ $post->user->username }}</a>,
                     <a href="/post/{{ $post->id }}">{{ $post->created_at->diffForHumans() }}</a>
                 </h5>
             </div>

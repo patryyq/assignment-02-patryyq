@@ -10,7 +10,7 @@ class LikeController extends Controller
 {
     public function like(Post $post)
     {
-        $like = Like::where('user_id', '=', Auth::id())->where('post_id', '=', $post->id)->get();
+        $like = Like::where('user_id', Auth::id())->where('post_id', $post->id)->get();
         if (isset($like[0]->id)) {
             Like::destroy($like[0]->id);
             return response('', 202);

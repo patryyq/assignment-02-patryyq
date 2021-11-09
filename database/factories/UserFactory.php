@@ -19,7 +19,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'nickname' => $this->faker->unique()->firstName() . '_'  . Str::random(5),
+            'username' => $this->faker->unique()->firstName() . '_'  . Str::random(5),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'avatar_path' => 'path/to/image.jpg',

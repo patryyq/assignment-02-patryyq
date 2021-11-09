@@ -24,7 +24,7 @@ function followUser(event) {
 }
 
 const titleSection = document.getElementById('titleSection')
-titleSection.addEventListener('click', followUser)
+if (titleSection != null) titleSection.addEventListener('click', followUser)
 
 const explore = document.getElementById('explore')
-explore.addEventListener('click', followUser)
+if (explore != null) explore.addEventListener('click', followUser)

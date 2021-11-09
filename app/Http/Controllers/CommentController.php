@@ -9,16 +9,18 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Request $request)
+    public function store(Post $post, Request $request)
     {
         $request->validate([
-            'comment_content' => 'required',
-            'post_id' => 'required'
+            'comment_content' => 'required'
         ]);
-        $comment = Comment::create($request->all());
 
-        return redirect('/post/' . strval($comment->post->id));
-        //    ->with('success', 'msg');
+        $post = Post::find($request->post_id)->first();
+        if (!$post->id || Auth::guest()) return redirect('/', 400)->with('success', 'Comment not added. Error occured.');
+
+        $comment = Comment::create($request->all());
+        return redirect('/post/' . strval($comment->post_id))
+            ->with('success', 'Comment added successfully.');
     }
 
     public function edit(Comment $comment)
@@ -33,8 +35,8 @@ class CommentController extends Controller
         $postID = $comment->post_id;
         $comment->delete();
 
-        return redirect('/post/' .  $postID);
-        //    ->with('success', 'msg');
+        return redirect('/post/' .  $postID)
+            ->with('success', 'Comment deleted successfully.');
     }
 
 
@@ -45,7 +47,7 @@ class CommentController extends Controller
         ]);
 
         $comment->update($request->all());
-        return redirect('/post/' . strval($comment->post_id));
-        //     ->with('success', 'msg');
+        return redirect('/post/' . strval($comment->post_id))
+            ->with('success', 'Comment updated successfully.');
     }
 }

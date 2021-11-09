@@ -13,14 +13,29 @@ class PostController extends Controller
 {
     public function index()
     {
-        $title = 'Latest posts';
-        (Auth::check()) ?
-            $usersToDisplayInFeed = Follower::where('user_id', '=', Auth::id())->get('followed_user_id') :
-            $usersToDisplayInFeed = Follower::get('followed_user_id');
+        $title = "Posts of all users";
 
         $posts = Post::orderBy('posts.id', 'desc')
             ->with(['like' => function ($like) {
-                $like->where('user_id', '=', Auth::id());
+                $like->where('user_id', Auth::id());
+            }])
+            ->withCount(['like'])
+            ->paginate(10);
+
+        return view('posts.main', [
+            'posts' => $posts,
+            'title' => $title
+        ]);
+    }
+
+    public function feed()
+    {
+        $title = 'Posts of followed users';
+        $usersToDisplayInFeed = Follower::where('user_id', Auth::id())->get('followed_user_id');
+
+        $posts = Post::orderBy('posts.id', 'desc')
+            ->with(['like' => function ($like) {
+                $like->where('user_id', Auth::id());
             }])
             ->whereIn('user_id', $usersToDisplayInFeed)
             ->withCount(['like'])
@@ -32,23 +47,23 @@ class PostController extends Controller
         ]);
     }
 
-    public function userPosts($nickname = null)
+    public function userPosts($username = null)
     {
-        $usr = User::where('nickname', '=', $nickname)->first() ?? false;
+        $usr = User::where('username', $username)->first() ?? false;
         if (!$usr) return redirect('/');
 
-        $following = Follower::where('user_id', '=', Auth::id())->where('followed_user_id', '=', $usr->id)->first() ?? false;
+        $following = Follower::where('user_id', Auth::id())->where('followed_user_id', $usr->id)->first() ?? false;
         $posts = Post::orderBy('posts.id', 'desc')
             ->with(['like' => function ($like) {
-                $like->where('user_id', '=', Auth::id());
+                $like->where('user_id', Auth::id());
             }])
-            ->where('user_id', '=', $usr->id)
+            ->where('user_id', $usr->id)
             ->withCount(['like'])
             ->paginate(10);
 
         return view('posts.main', [
             'posts' => $posts,
-            'title' => $nickname,
+            'title' => $username,
             'user' => $usr,
             'following' => $following
         ]);
@@ -56,7 +71,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->with(['like' => function ($like) {
-            $like->where('user_id', '=', Auth::id());
+            $like->where('user_id', Auth::id());
         }])->first();
 
         return view('posts.show', [
@@ -76,8 +91,8 @@ class PostController extends Controller
         ]);
 
         $post = Post::create($request->all());
-        return redirect('/post/' . strval($post->id));
-        //    ->with('success', 'msg');
+        return redirect('/post/' . strval($post->id))
+            ->with('success', 'Post added successfully.');
     }
 
     public function edit(Post $post)
@@ -89,11 +104,11 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $userNickname = $post->user->nickname;
+        $userusername = $post->user->username;
         $post->delete();
 
-        return redirect('/user/' . $userNickname);
-        //    ->with('success', 'msg');
+        return redirect('/user/' . $userusername)
+            ->with('success', 'Post deleted successfully.');
     }
 
 
@@ -104,7 +119,7 @@ class PostController extends Controller
         ]);
 
         $post->update($request->all());
-        return redirect('/post/' . strval($post->id));
-        //     ->with('success', 'msg');
+        return redirect('/post/' . strval($post->id))
+            ->with('success', 'Post updated successfully.');
     }
 }

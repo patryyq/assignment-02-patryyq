@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Follower;
 
 class UserController extends Controller
 {
@@ -13,7 +12,7 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             $users = User::inRandomOrder()->with('followed')
-                ->paginate(15);
+                ->limit(20)->get();
             foreach ($users as $user) {
                 $user->followedStatus = false;
                 foreach ($user->followed as $followed) {
@@ -24,7 +23,7 @@ class UserController extends Controller
             }
         } else {
             $users = User::inRandomOrder()
-                ->paginate(15);
+                ->limit(20)->get();
         }
         return view('explore', [
             'users' => $users

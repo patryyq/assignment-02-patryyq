@@ -10,7 +10,7 @@ class FollowerController extends Controller
 {
     public function follow(User $user)
     {
-        $following = Follower::where('user_id', '=', Auth::id())->where('followed_user_id', '=', $user->id)->get();
+        $following = Follower::where('user_id', Auth::id())->where('followed_user_id', $user->id)->get();
         if (isset($following[0]->id)) {
             Follower::destroy($following[0]->id);
             return response('', 202);

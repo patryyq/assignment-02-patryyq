@@ -1,9 +1,3 @@
-<?php
-
-use Illuminate\Support\Facades\Auth;
-//use App\Http\Controllers\UserController;
-
-?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -12,9 +6,7 @@ use Illuminate\Support\Facades\Auth;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_csrf" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/54cca6735a.js" crossorigin="anonymous"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -22,24 +14,26 @@ use Illuminate\Support\Facades\Auth;
 <body>
     <div class="text-white bg-info pt-2">
         <section class="pageHeader">
-            <div class="container mx-auto col-12 col-xl-6">
+            <div class="container mx-auto col-12 col-xl-6 col-md-8">
                 <h1>Twitter-like</h1>
             </div>
         </section>
 
-        <ul class="container mx-auto navbar col-12 col-xl-6 mb-0">
-            <li><a href="/">Home Feed</a></li>
-            <li><a href="/explore">Explore</a></li>
+        <ul class="container mx-auto navbar col-12 col-xl-6 col-md-8 mb-0">
+            <li><a href="/">Home</a></li>
             @if (Auth::guest())
+            <li><a href="/explore">Explore</a></li>
             <li><a href="/login">Login</a></li>
             @else
-            <li><a href="/user/{{ Auth::user()->nickname }}">Posts</a></li>
+            <li><a href="/feed">Feed</a></li>
+            <li><a href="/user/{{ Auth::user()->username }}">Posts</a></li>
+            <li><a href="/explore">Explore</a></li>
             <li><a href="/logout">Logout</a></li>
             @endif
         </ul>
     </div>
     <section id="titleSection" class="pageTitle mx-auto col-12 py-4 bg-light border-bottom">
-        <div class="container mx-auto col-xl-6 d-flex flex-row justify-content-between align-items-center">
+        <div class="container mx-auto col-12 col-xl-6 col-md-8 d-flex flex-row justify-content-between align-items-center">
             <h2 class="mb-0 py-0">@yield('title')</h2>
             @if (isset($following))
             <div class="p-3 position-relative">
@@ -61,6 +55,7 @@ use Illuminate\Support\Facades\Auth;
             @yield('content')
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>

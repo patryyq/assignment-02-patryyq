@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 use App\Models\User;
+use App\Models\Post;
 
 class CreateCommentsTable extends Migration
 {
@@ -17,8 +18,8 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->integer('post_id');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Post::class, 'post_id');
+            $table->foreignIdFor(User::class, 'user_id');
             $table->text('comment_content');
             $table->timestamps();
         });

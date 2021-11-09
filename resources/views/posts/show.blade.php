@@ -1,14 +1,17 @@
 @extends('layouts.app')
-
 @section('title', 'Post details')
-
 @section('content')
 
 <div class="mt-5">
+    @if(session()->has('success'))
+    <div class="alert alert-warning" role="alert">
+        {{ session()->get('success') }}
+    </div>
+    @endif
     <div class="mb-5">
         <div class="d-flex flex-row col-md-12 bg-info justify-content-between align-items-center px-3">
             <div class="p-3 align-items-center">
-                <h5 class="m-0 p-0">&#64;<a href="/user/{{ $post->user->nickname }}">{{ $post->user->nickname }}</a>,
+                <h5 class="m-0 p-0">&#64;<a href="/user/{{ $post->user->username }}">{{ $post->user->username }}</a>,
                     <a href="/post/{{ $post->id }}">{{ $post->created_at->diffForHumans() }}</a>
                 </h5>
             </div>
@@ -20,7 +23,7 @@
                     </span>
                 </div>
                 <div class="p-3 position-relative">
-                    @if (count($post->like->where('user_id', '=', Auth::id())) === 1)
+                    @if (count($post->like->where('user_id', Auth::id())) === 1)
                     <!-- full heart icon -->
                     <i id="{{ $post->id }}" class="fas fa-heart like @if(Auth::guest())guest @endif"></i>
                     @else
@@ -63,7 +66,7 @@
         </form>
         @endif
         @foreach ($post->comment as $pst)
-        <div class="border p-3 mb-3"><b>{{ $pst->user->nickname }}</b>, {{ $pst->created_at->diffForHumans() }}<br>{{ $pst->comment_content }}<br><br>
+        <div class="border p-3 mb-3"><b>{{ $pst->user->username }}</b>, {{ $pst->created_at->diffForHumans() }}<br>{{ $pst->comment_content }}<br><br>
             @if (Auth::check() && ($pst->user_id === Auth::id() || Auth::user()->admin_role == 1))
             <form class="d-flex justify-content-end mt-2" action="{{ route('comment.destroy', $pst->id) }}" method="POST">
                 <a class="m-2 btn-primary btn" href="{{ route('comment.edit', $pst->id) }}">Edit</a>
