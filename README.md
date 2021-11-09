@@ -7,7 +7,7 @@ The following installation steps assume you are using XAMPP or a similar environ
 
 ### 1. Clone the repo
 ```
-git clone --branch master https://github.com/hudds-awp2021-cht2520/assignment-01-patryyq
+git clone https://github.com/hudds-awp2021-cht2520/assignment-01-patryyq
 ```
 
 

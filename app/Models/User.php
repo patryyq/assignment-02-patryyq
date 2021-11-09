@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Post;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\Follower;
 
 class User extends Authenticatable
 {
@@ -59,5 +60,15 @@ class User extends Authenticatable
     public function comment()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function followed()
+    {
+        return $this->hasMany(Follower::class, 'followed_user_id');
+    }
+
+    public function following()
+    {
+        return $this->hasMany(Follower::class, 'user_id');
     }
 }

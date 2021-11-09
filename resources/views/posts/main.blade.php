@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $title . ' posts')
+@section('title', $title)
 
 @section('content')
 <?php
@@ -8,7 +8,12 @@
 // echo var_dump($posts);
 // echo '</pre>';
 ?>
-<div>
+@if (isset($user))
+<div class="p-3 bg-light mb-5"><b>About {{$user->nickname}}:</b><br>
+    <blockquote class="blockquote">"{{$user->description}}"</blockquote>
+</div>
+@endif
+<div class="mt-5">
     @if (Auth::check() && $title == Auth::user()->nickname)
     <form action="/posts" method="POST">
         @csrf
@@ -58,8 +63,8 @@
         </div>
         <div class="p-3 bg-light">{{ $post->post_content }}</div>
         @if (Auth::check() && ($post->user_id === Auth::id() || Auth::user()->admin_role == 1))
-        <form class="d-flex justify-content-end mt-2" action="{{ route('post.destroy', $post->id) }}" method="POST">
-            <a class="m-2 btn-primary btn" href="{{ route('post.edit', $post->id) }}">Edit</a>
+        <form class="d-flex justify-content-end mt-2" action="{{ route('posts.destroy', $post->id) }}" method="POST">
+            <a class="m-2 btn-primary btn" href="{{ route('posts.edit', $post->id) }}">Edit</a>
             @csrf
             @method('DELETE')
             <button type="submit" class="m-2 btn-danger btn">Delete</button>
@@ -69,5 +74,6 @@
     @endforeach
 </div>
 <script src="/js/like.js"></script>
+<script src="/js/follower.js"></script>
 {!! $posts->links() !!}
 @endsection

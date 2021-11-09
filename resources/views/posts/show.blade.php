@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div>
+<div class="mt-5">
     <div class="mb-5">
         <div class="d-flex flex-row col-md-12 bg-info justify-content-between align-items-center px-3">
             <div class="p-3 align-items-center">
@@ -35,8 +35,8 @@
         </div>
         <div class="p-3 bg-light">{{ $post->post_content }}</div>
         @if (Auth::check() && ($post->user_id === Auth::id() || Auth::user()->admin_role == 1))
-        <form class="d-flex justify-content-end mt-2" action="{{ route('post.destroy', $post->id) }}" method="POST">
-            <a class="mx-2 btn-primary btn" href="{{ route('post.edit', $post->id) }}">Edit</a>
+        <form class="d-flex justify-content-end mt-2" action="{{ route('posts.destroy', $post->id) }}" method="POST">
+            <a class="mx-2 btn-primary btn" href="{{ route('posts.edit', $post->id) }}">Edit</a>
 
             @csrf
             @method('DELETE')
@@ -63,15 +63,16 @@
         </form>
         @endif
         @foreach ($post->comment as $pst)
-        <b>{{ $pst->user->nickname }}</b><br>{{ $pst->comment_content }}<br><br>
-        @if (Auth::check() && ($pst->user_id === Auth::id() || Auth::user()->admin_role == 1))
-        <form class="d-flex justify-content-end mt-2" action="{{ route('comment.destroy', $pst->id) }}" method="POST">
-            <a class="m-2 btn-primary btn" href="{{ route('comment.edit', $pst->id) }}">Edit</a>
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="m-2 btn-danger btn">Delete</button>
-        </form>
-        @endif
+        <div class="border p-3 mb-3"><b>{{ $pst->user->nickname }}</b>, {{ $pst->created_at->diffForHumans() }}<br>{{ $pst->comment_content }}<br><br>
+            @if (Auth::check() && ($pst->user_id === Auth::id() || Auth::user()->admin_role == 1))
+            <form class="d-flex justify-content-end mt-2" action="{{ route('comment.destroy', $pst->id) }}" method="POST">
+                <a class="m-2 btn-primary btn" href="{{ route('comment.edit', $pst->id) }}">Edit</a>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="m-2 btn-danger btn">Delete</button>
+            </form>
+            @endif
+        </div>
         @endforeach
     </div>
 </div>
