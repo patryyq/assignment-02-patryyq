@@ -17,8 +17,8 @@ class CreateFollowersTable extends Migration
     {
         Schema::create('followers', function (Blueprint $table) {
             $table->id();
-            $table->integer('followed_user_id');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class, 'followed_user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(User::class, 'user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('followed_at');
 
             $table->unique(['followed_user_id', 'user_id']);
