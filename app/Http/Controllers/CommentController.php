@@ -9,14 +9,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Post $post, Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'comment_content' => 'required'
         ]);
-
-        $post = Post::find($request->post_id)->first();
-        if (!$post->id || Auth::guest()) return redirect('/', 400)->with('success', 'Comment not added. Error occured.');
 
         $comment = Comment::create($request->all());
         return redirect('/post/' . strval($comment->post_id))
@@ -30,7 +27,7 @@ class CommentController extends Controller
         ]);
     }
 
-    public function destroy(Post $post, Comment $comment)
+    public function destroy(Comment $comment)
     {
         $postID = $comment->post_id;
         $comment->delete();
