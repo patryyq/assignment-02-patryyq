@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Post $post, Request $request)
+    public function isCommentOwnerOrAdmin($comment)
+    {
+        return ($comment->user_id != Auth::id() && Auth::user()->admin_role != 1) ? false : true;
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'comment_content' => 'required'
         ]);
-
-        $post = Post::find($request->post_id)->first();
-        if (!$post->id || Auth::guest()) return redirect('/', 400)->with('success', 'Comment not added. Error occured.');
 
         $comment = Comment::create($request->all());
         return redirect('/post/' . strval($comment->post_id))
@@ -30,10 +31,12 @@ class CommentController extends Controller
         ]);
     }
 
-    public function destroy(Post $post, Comment $comment)
+    public function destroy(Comment $comment)
     {
         $postID = $comment->post_id;
         $comment->delete();
+
+        if (!$this->isCommentOwnerOrAdmin($comment)) return redirect('/');
 
         return redirect('/post/' .  $postID)
             ->with('success', 'Comment deleted successfully.');
@@ -45,6 +48,8 @@ class CommentController extends Controller
         $request->validate([
             'comment_content' => 'required'
         ]);
+
+        if (!$this->isCommentOwnerOrAdmin($comment)) return redirect('/');
 
         $comment->update($request->all());
         return redirect('/post/' . strval($comment->post_id))
