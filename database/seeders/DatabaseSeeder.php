@@ -8,6 +8,7 @@ use Database\Seeders\PostSeeder;
 use Database\Seeders\LikeSeeder;
 use Database\Seeders\CommentSeeder;
 use Database\Seeders\FollowerSeeder;
+use Database\Seeders\MessageSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +19,8 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             LikeSeeder::class,
             CommentSeeder::class,
-            FollowerSeeder::class
+            FollowerSeeder::class,
+            MessageSeeder::class
         ]);
     }
 }
