@@ -5,7 +5,7 @@
 
 <div class="col-12 d-flex justify-content-center">
     <form action="{{ route('registration') }}" method="POST" class="col-xs-12 col-md-6 d-flex flex-wrap flex-column justify-content-center">
-        <h1 class="mx-0 mt-4">Login</h1>
+        <h1 class="mx-0 mt-4">Register</h1>
         @csrf
         <div class="mt-3 form-group">
             <label for="username">Username:</label>
@@ -33,7 +33,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-danger">Register</button>
+        <button type="submit" class="mt-3 btn btn-danger">Register</button>
         <a href="/login"> <button type="button" class="mt-3 btn btn-primary">Login</button></a>
     </form>
 </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ForgotPasswordController;
 
 Route::post('/like/{post}', [LikeController::class, 'like'])->middleware('auth');
 Route::post('/follower/{user}', [FollowerController::class, 'follow'])->middleware('auth');
@@ -23,3 +24,7 @@ Route::resource('comment', CommentController::class)->middleware('auth');
 Route::get('/', [PostController::class, 'index']);
 Route::get('/feed', [PostController::class, 'feed'])->middleware('auth')->name('feed');
 Route::get('/user/{user}', [PostController::class, 'userPosts']);
+Route::get('/forgot-password', [ForgotPasswordController::class, 'forgot'])->middleware('guest');
+Route::get('/reset-password/{email}/{token}', [ForgotPasswordController::class, 'verifyToken'])->middleware('guest');
+Route::post('/reset-password/{email}/{token}', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('new-pw');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLinkWithToken'])->middleware('guest')->name('forgot-pw');
