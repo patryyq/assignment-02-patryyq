@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Follower;
+use App\Models\Message;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,9 @@ class User extends Authenticatable
     public function following()
     {
         return $this->hasMany(Follower::class, 'user_id');
+    }
+    public function message()
+    {
+        return $this->hasMany(Message::class);
     }
 }

@@ -11,10 +11,10 @@ class Message extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $dates = ['message_sent_at'];
     protected $fillable = [
         'message_content',
-        'to_user_id',
-        'from_user_id'
+        'to_user_id'
     ];
 
     protected static function booted()
@@ -26,13 +26,13 @@ class Message extends Model
         });
     }
 
-    public function to_user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
     public function from_user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    public function to_user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

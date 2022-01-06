@@ -12,13 +12,11 @@ class MessageFactory extends Factory
 
     public function definition()
     {
+        $users = User::inRandomOrder()->take(2)->pluck('id');
+
         return [
-            'to_user_id' => function () {
-                return User::all()->random();
-            },
-            'from_user_id' => function () {
-                return User::all()->random();
-            },
+            'to_user_id' => $users->first(),
+            'from_user_id' => $users->last(),
             'message_content' => $this->faker->realText(random_int(20, 300)),
             'read' => 0,
         ];

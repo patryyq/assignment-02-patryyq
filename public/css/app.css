@@ -31,3 +31,11 @@ h5 a {
 .badge {
     font-size:0.7rem;
 }
+
+.float_left {
+    float:left;
+}
+
+.float_right {
+    float:right
+}
