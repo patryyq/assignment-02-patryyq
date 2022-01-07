@@ -3,7 +3,7 @@
 @section('content')
 
 @if (isset($user))
-<div class="p-3 bg-light mb-5"><b>About {{$user->username}}:</b><br>
+<div class="p-3 bg-light mb-5"><b>{{$user->username}}</b> says:<br>
     <blockquote class="blockquote">"{{$user->description}}"</blockquote>
 </div>
 @endif

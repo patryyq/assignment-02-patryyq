@@ -16,21 +16,12 @@ class UserController extends Controller
 
     public function explore()
     {
-        $followedUsers = $this->listOfFollowedUserIds();
         if (Auth::check()) {
+            $followedUsers = $this->listOfFollowedUserIds();
             $users = User::inRandomOrder()
                 ->whereNotIn('id', $followedUsers)
-                ->with('followed')
                 ->limit(20)
                 ->get();
-            foreach ($users as $user) {
-                $user->followedStatus = false;
-                foreach ($user->followed as $followed) {
-                    if ($followed->user_id == Auth::id()) {
-                        $user->followedStatus = true;
-                    }
-                }
-            }
         } else {
             $users = User::inRandomOrder()
                 ->limit(20)->get();
