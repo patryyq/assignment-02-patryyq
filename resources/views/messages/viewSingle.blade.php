@@ -39,7 +39,7 @@
     <div style="clear:both"></div>
     <form id="send-msg" action="{{route('send-msg', $username)}}" method="POST" class="col-12 p-3 d-flex justify-content-between bg-light border-top">
         @csrf
-        <input type="text" name="message_content" id="message_content" placeholder="Type message here..." class="col-8 p-2">
+        <input type="text" name="message_content" autocomplete="off" id="message_content" placeholder="Type message here..." class="col-8 p-2">
         <button type="submit" class="col-3 p-2 btn btn-info">Send message</button>
     </form>
 </div>

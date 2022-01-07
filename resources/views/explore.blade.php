@@ -13,11 +13,7 @@
                     <a href="/user/{{$user->username }}">{{$user->username}} </a>
                     <div class="d-flex align-items-center">
                         <div class="p-3 position-relative">
-                            @if ($user->followedStatus)
-                            <button id="{{ $user->id }}" type="button" class="btn btn-dark follow @if(Auth::guest())guest @endif">Following</button>
-                            @else
                             <button id="{{ $user->id }}" type="button" class="btn btn-outline-dark follow @if(Auth::guest())guest @endif">Follow</button>
-                            @endif
                             <span class="position-absolute bottom-0 right-0 translate-middle badge rounded-pill bg-danger">
                                 {{ $user->followed->count() }}
                             </span>

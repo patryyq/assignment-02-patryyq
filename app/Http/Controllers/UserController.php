@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Follower;
 
 class UserController extends Controller
 {
+    public function listOfFollowedUserIds()
+    {
+        return Follower::where('user_id', Auth::id())->pluck('followed_user_id');
+    }
+
     public function explore()
     {
         if (Auth::check()) {
-            $users = User::inRandomOrder()->with('followed')
-                ->limit(20)->get();
-            foreach ($users as $user) {
-                $user->followedStatus = false;
-                foreach ($user->followed as $followed) {
-                    if ($followed->user_id == Auth::id()) {
-                        $user->followedStatus = true;
-                    }
-                }
-            }
+            $followedUsers = $this->listOfFollowedUserIds();
+            $users = User::inRandomOrder()
+                ->whereNotIn('id', $followedUsers)
+                ->limit(20)
+                ->get();
         } else {
             $users = User::inRandomOrder()
                 ->limit(20)->get();
@@ -32,7 +33,9 @@ class UserController extends Controller
 
     public function findMatchingUsernames($needle)
     {
-        $matchingUsernames = User::select('username')->where('username', 'like', '%' . $needle . '%')->get();
+        $matchingUsernames = User::select('username')->where('username', 'like', '%' . $needle . '%')
+            ->where('username', '!=', Auth::user()->username)
+            ->get();
         if ($matchingUsernames) {
             return response($matchingUsernames, 200);;
         } else {
