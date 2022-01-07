@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class Message extends Model
 {
     use HasFactory;
-    public $timestamps = false;
-    protected $dates = ['message_sent_at'];
+
     protected $fillable = [
         'message_content',
-        'to_user_id'
+        'to_user_id',
+        'read'
     ];
 
     protected static function booted()

@@ -10,7 +10,7 @@ class MessageSeeder extends Seeder
     public function run()
     {
         Message::factory()
-            ->count(300)
+            ->count(500)
             ->create();
     }
 }

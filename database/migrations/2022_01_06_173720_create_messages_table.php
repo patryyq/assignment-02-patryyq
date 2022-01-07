@@ -21,7 +21,7 @@ class CreateMessagesTable extends Migration
             $table->foreignIdFor(User::class, 'from_user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->text('message_content');
             $table->integer('read');
-            $table->timestamp('message_sent_at');
+            $table->timestamps();
         });
     }
 
