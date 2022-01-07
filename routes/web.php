@@ -32,3 +32,4 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLinkWithT
 Route::get('/messages', [MessageController::class, 'viewAll'])->middleware('auth');
 Route::get('/messages/{username}', [MessageController::class, 'viewSingle'])->middleware('auth')->name('single-msg');
 Route::post('/msg/{username}', [MessageController::class, 'store'])->middleware('auth')->name('send-msg');
+Route::get('/username/{needle}', [UserController::class, 'findMatchingUsernames'])->middleware('auth');

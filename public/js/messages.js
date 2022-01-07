@@ -3,7 +3,6 @@ function setMaxAvaiableHeight() {
     const sendMsg = document.getElementById('send-msg')
 
     const availableHeight = window.innerHeight - box.offsetTop - sendMsg.offsetHeight - 20
-    console.log(availableHeight)
     box.style.height = availableHeight + 'px'
     box.scrollTop = box.scrollHeight
 }

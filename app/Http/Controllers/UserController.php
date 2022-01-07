@@ -29,4 +29,14 @@ class UserController extends Controller
             'users' => $users
         ]);
     }
+
+    public function findMatchingUsernames($needle)
+    {
+        $matchingUsernames = User::select('username')->where('username', 'like', '%' . $needle . '%')->get();
+        if ($matchingUsernames) {
+            return response($matchingUsernames, 200);;
+        } else {
+            return response('', 401);
+        }
+    }
 }

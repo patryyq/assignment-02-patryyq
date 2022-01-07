@@ -43,3 +43,7 @@ h5 a {
 .float_right {
     float:right
 }
+
+.hoverUsername:hover{
+    background: #0dcaf0;
+}

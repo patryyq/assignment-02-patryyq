@@ -14,7 +14,7 @@
 <body>
     <div class="text-white bg-info pt-2">
         <section class="pageHeader">
-            <div class="container mx-auto col-xl-7 col-md-10 col-xs-12 d-flex flex-row justify-content-between align-items-center position-relative">
+            <div class="container mx-auto col-xl-7 col-md-12 col-xs-12 d-flex flex-row justify-content-between align-items-center position-relative">
                 <h1>Twitter-like</h1>
                 @if (!Auth::guest())
                 <a href="/messages"><i class="far fa-comment-alt" aria-hidden="true" style="color:white">
@@ -26,7 +26,7 @@
             </div>
         </section>
 
-        <ul class="container mx-auto navbar col-xl-7 col-md-10 col-xs-12 mb-0">
+        <ul class="container mx-auto navbar col-xl-7 col-md-12 col-xs-12 mb-0">
             <li><a href="/">Home</a></li>
             @if (Auth::guest())
             <li><a href="/explore">Explore</a></li>
@@ -40,7 +40,7 @@
         </ul>
     </div>
     <section id="titleSection" class="pageTitle mx-auto col-12 py-4 bg-light border-bottom">
-        <div class="container mx-auto col-xl-7 col-md-10 col-xs-12 d-flex flex-row justify-content-between align-items-center">
+        <div class="container mx-auto col-xl-7 col-md-12 col-xs-12 d-flex flex-row justify-content-between align-items-center">
             <h2 class="mb-0 py-0">@yield('title')</h2>
             @if (isset($following))
             <div class="p-3 position-relative">
@@ -62,7 +62,7 @@
         </div>
     </section>
 
-    <section class="content mx-auto col-xl-7 col-md-10 col-xs-12">
+    <section class="content mx-auto col-xl-7 col-md-12 col-xs-12">
         <div class="container mx-auto">
             @yield('content')
         </div>
