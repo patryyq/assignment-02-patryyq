@@ -9,6 +9,7 @@ use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\MessageController;
 
 Route::post('/like/{post}', [LikeController::class, 'like'])->middleware('auth');
 Route::post('/follower/{user}', [FollowerController::class, 'follow'])->middleware('auth');
@@ -28,3 +29,7 @@ Route::get('/forgot-password', [ForgotPasswordController::class, 'forgot'])->mid
 Route::get('/reset-password/{email}/{token}', [ForgotPasswordController::class, 'verifyToken'])->middleware('guest');
 Route::post('/reset-password/{email}/{token}', [ForgotPasswordController::class, 'resetPassword'])->middleware('guest')->name('new-pw');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLinkWithToken'])->middleware('guest')->name('forgot-pw');
+Route::get('/messages', [MessageController::class, 'viewAll'])->middleware('auth');
+Route::get('/messages/{username}', [MessageController::class, 'viewSingle'])->middleware('auth')->name('single-msg');
+Route::post('/msg/{username}', [MessageController::class, 'store'])->middleware('auth')->name('send-msg');
+Route::get('/username/{needle}', [UserController::class, 'findMatchingUsernames'])->middleware('auth');

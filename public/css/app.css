@@ -1,3 +1,7 @@
+html,body{
+    margin:0;
+    padding:0;
+}
 .pagination{
     display: flex;
     flex-wrap: wrap;
@@ -30,4 +34,16 @@ h5 a {
 
 .badge {
     font-size:0.7rem;
+}
+
+.float_left {
+    float:left;
+}
+
+.float_right {
+    float:right
+}
+
+.hoverUsername:hover{
+    background: #0dcaf0;
 }

@@ -28,3 +28,11 @@ if (titleSection != null) titleSection.addEventListener('click', followUser)
 
 const explore = document.getElementById('explore')
 if (explore != null) explore.addEventListener('click', followUser)
+
+const dmButton = document.getElementsByName('send_dm')[0]
+function sendMessageRedirect(evnt) {
+    const username = evnt.target.id
+    window.location.href = '/messages/' + username
+}
+
+dmButton.addEventListener('click', sendMessageRedirect)
