@@ -66,7 +66,7 @@
         </form>
         @endif
         @foreach ($post->comment as $pst)
-        <div class="border p-3 mb-3"><b>{{ $pst->user->username }}</b>, {{ $pst->created_at->diffForHumans() }}<br>{{ $pst->comment_content }}<br><br>
+        <div class="border p-3 mb-3">&#64;<b><a href="/user/{{ $pst->user->username }}">{{ $pst->user->username }}</a></b>, {{ $pst->created_at->diffForHumans() }}<br>{{ $pst->comment_content }}<br><br>
             @if (Auth::check() && ($pst->user_id === Auth::id() || Auth::user()->admin_role == 1))
             <form class="d-flex justify-content-end mt-2" action="{{ route('comment.destroy', $pst->id) }}" method="POST">
                 <a class="m-2 btn-primary btn" href="{{ route('comment.edit', $pst->id) }}">Edit</a>

@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
         User::factory()
             ->count(1)
             ->create([
+                'username' => 'admin',
                 'email' => 'admin@email.com',
                 'admin_role' => '1'
             ]);
@@ -19,6 +20,7 @@ class UserSeeder extends Seeder
         User::factory()
             ->count(1)
             ->create([
+                'username' => 'user',
                 'email' => 'user@email.com',
             ]);
 

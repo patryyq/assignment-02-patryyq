@@ -7,10 +7,10 @@
     @if (session('status') && session('status')['status'] == 1)
     <div class="col-sm-12 col-md-6 d-flex flex-wrap flex-column justify-content-center">
         <h1 class="mx-0 mt-4">Reset link</h1>
-        Clicking on the link below to access a form to change your password.
+        Click on the link below to access a form to change your password.
         <div class="mt-3 alert alert-warning"><a href="{{ session('status')['message'] }}">Reset link</a></div>
         <div class="mt-3 p-0 lert alert-light" role="alert">
-            Note: the above link is used as a replacement for an email. It is not possible to send emails in localhost, so I decided to do something like this.
+            Note: this page is used as a replacement for an email. It is difficult to send emails in localhost, so I decided to do something like this.
         </div>
     </div>
     @elseif (isset($status) && $status == 2)

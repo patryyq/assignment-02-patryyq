@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Messages')
+@section('title', 'Direct Messages')
 @section('content')
 
 <div class="mt-4">
     @foreach ($messages as $message)
-    <div class="my-2 border d-flex flex-row col-md-12 bg-light justify-content-between align-items-center px-3">
+    <div class="my-2 border d-flex flex-row col-12 bg-light justify-content-between align-items-center px-3">
         <div class="p-3">
             @if ($message->from_user_id != Auth::id())
             @if ($message->read == 0)

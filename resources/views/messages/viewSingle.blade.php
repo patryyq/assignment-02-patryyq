@@ -1,21 +1,26 @@
 @extends('layouts.app')
-@section('title', 'Conversation with: '.$username)
+@section('title', 'DM with: '.$username)
 @section('content')
 
 <div class="mt-4 col-12 border">
     <div id="msg-box" class="pb-5" style="overflow-y:scroll;font-size:0.9rem">
+        @if (count($messages) === 0)
+        <div class="bg-warning p-3 position-relative my-3 mx-auto col-10 rounded">
+            You have not spoken to this user before. Send your first message now!
+        </div>
+        @endif
         @foreach ($messages as $message)
         @if ($message->from_user_id === Auth::id())
         <div class="m-3 col-8 float_right">
             <div>
                 <b>Me</b>, {{$message->created_at->diffForHumans()}}
             </div>
-            <div class="bg-info p-3 position-relative">
+            <div class="bg-info p-3 position-relative rounded">
                 {{$message->message_content}}
                 @if ($message->read === 0)
-                <i class="fas fa-check" style="position:absolute;right:0;bottom:-20px;font-size:1rem"></i>
+                <i class="fas fa-check" style="position:absolute;right:10px;bottom:-20px;font-size:1rem" title="Message unread"></i>
                 @else
-                <i class="fas fa-check-double" style="position:absolute;right:0;bottom:-20px;font-size:1rem"></i>
+                <i class="fas fa-check-double" style="position:absolute;right:10px;bottom:-20px;font-size:1rem" title="Message read"></i>
                 @endif
             </div>
         </div>
@@ -24,7 +29,7 @@
             <div>
                 <b><a href="/user/{{$message->from_user->username}}">{{$message->from_user->username}}</a></b>, {{$message->created_at->diffForHumans()}}
             </div>
-            <div class="bg-light p-3">
+            <div class="bg-light p-3 rounded">
                 {{$message->message_content}}
             </div>
         </div>
