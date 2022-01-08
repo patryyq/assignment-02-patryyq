@@ -12,6 +12,7 @@ use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Follower;
 use App\Models\Message;
+use App\Models\Token;
 
 class User extends Authenticatable
 {
@@ -23,19 +24,11 @@ class User extends Authenticatable
         'password',
         'admin_role',
         'avatar_path',
-        'description',
-        'email_verified_at',
-        'code_2fa',
-        'remember_token'
+        'description'
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'password'
     ];
 
     public function post()
@@ -62,8 +55,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Follower::class, 'user_id');
     }
+
     public function message()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function token()
+    {
+        return $this->hasOne(Token::class);
     }
 }

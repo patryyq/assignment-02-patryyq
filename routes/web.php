@@ -16,6 +16,7 @@ Route::post('/follower/{user}', [FollowerController::class, 'follow'])->middlewa
 Route::get('/explore', [UserController::class, 'explore']);
 Route::get('/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->middleware('guest')->name('authenticate');
+Route::post('/login-2fa', [LoginController::class, 'twoFactorAuthenticaton'])->middleware('guest')->name('2fa');
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->middleware('guest')->name('registration');
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
