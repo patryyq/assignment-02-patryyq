@@ -17,7 +17,7 @@ class MessageFactory extends Factory
         return [
             'to_user_id' => $users->first(),
             'from_user_id' => $users->last(),
-            'message_content' => $this->faker->sentence(16),
+            'message_content' => $this->faker->realText(random_int(20, 500)),
             'read' => 1,
         ];
     }

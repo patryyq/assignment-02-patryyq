@@ -8,11 +8,6 @@ use App\Models\User;
 
 class CreateFollowersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('followers', function (Blueprint $table) {
@@ -25,11 +20,6 @@ class CreateFollowersTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('followers');
