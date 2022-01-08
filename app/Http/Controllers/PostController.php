@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function isPostOwnerOrAdmin($post)
+    {
+        return ($post->user_id != Auth::id() && Auth::user()->admin_role != 1) ? false : true;
+    }
+
     public function index()
     {
         $title = "Posts of all users";
@@ -104,6 +109,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        if (!$this->isPostOwnerOrAdmin($post)) return redirect('/');
+
         $userusername = $post->user->username;
         $post->delete();
 
@@ -114,11 +121,13 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
+        if (!$this->isPostOwnerOrAdmin($post)) return redirect('/');
+
         $request->validate([
             'post_content' => 'required'
         ]);
-
         $post->update($request->all());
+
         return redirect('/post/' . strval($post->id))
             ->with('success', 'Post updated successfully.');
     }

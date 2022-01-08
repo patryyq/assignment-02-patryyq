@@ -33,10 +33,10 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
+        if (!$this->isCommentOwnerOrAdmin($comment)) return redirect('/');
+
         $postID = $comment->post_id;
         $comment->delete();
-
-        if (!$this->isCommentOwnerOrAdmin($comment)) return redirect('/');
 
         return redirect('/post/' .  $postID)
             ->with('success', 'Comment deleted successfully.');
@@ -45,13 +45,13 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
+        if (!$this->isCommentOwnerOrAdmin($comment)) return redirect('/');
+
         $request->validate([
             'comment_content' => 'required'
         ]);
-
-        if (!$this->isCommentOwnerOrAdmin($comment)) return redirect('/');
-
         $comment->update($request->all());
+
         return redirect('/post/' . strval($comment->post_id))
             ->with('success', 'Comment updated successfully.');
     }
