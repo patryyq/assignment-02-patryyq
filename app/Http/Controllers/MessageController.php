@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Notifications\RealTimeNotification;
 
 class MessageController extends Controller
 {
@@ -20,6 +21,8 @@ class MessageController extends Controller
         $request->merge(['to_user_id' => $user->id]);
 
         Message::create($request->all());
+        $user->notify(new RealTimeNotification('Hello World'));
+
         return redirect()->route('single-msg', $username);
     }
 
