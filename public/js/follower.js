@@ -35,4 +35,4 @@ function sendMessageRedirect(evnt) {
     window.location.href = '/messages/' + username
 }
 
-dmButton.addEventListener('click', sendMessageRedirect)
+if (dmButton != undefined) dmButton.addEventListener('click', sendMessageRedirect)

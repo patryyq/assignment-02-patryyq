@@ -20,11 +20,22 @@ class MessageController extends Controller
         ]);
         $request->merge(['to_user_id' => $user->id]);
 
-        Message::create($request->all());
-        $user->notify(new RealTimeNotification('Hello World'));
+        $message = Message::create($request->all());
+        $user->notify(new RealTimeNotification($request->message_content, $message->from_user->username));
 
         return redirect()->route('single-msg', $username);
     }
+
+    public function markAsReadJS($username)
+    {
+        $user = User::where('username', $username)->first();
+        if (!$user || $user->id == Auth::id()) return redirect('/messages');
+
+        $messages = Message::where('from_user_id', $user->id)->where('to_user_id', Auth::id())->where('read', 0)->get();
+        $this->markAsRead($messages);
+        return response('', 202);
+    }
+
 
     public function viewAll()
     {
