@@ -22,7 +22,7 @@
                 </a>
                 @if (!Auth::guest())
                     <a href="/messages"><i class="far fa-comment-alt" aria-hidden="true" style="color:white">
-                            <span
+                            <span id="msgCount" 
                                 class="position-absolute bottom-0 right-0 translate-middle badge rounded-pill bg-danger">
                                 {{ App\Models\Message::where('read', 0)->where('to_user_id', Auth::id())->get()->count() }}
                             </span></i></a>
@@ -78,6 +78,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<script>Echo.private('App.Models.User.{{Auth::id()}}')
+    .notification((notification) => {
+        let data = [notification.message, notification.user];
+        displayNotification(data)
+        return data;
+    });
+
+//     // Example 1 - Event Channel
+//     Echo.channel('events')
+//         .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
+
+//   //  Example 2 - Private Event Channel
+//     Echo.private('events')
+//         .listen('RealTimeMessage', (e) => console.log('Private RealTimeMessage: ' + e.message));
+
+</script>
+<script src="/js/notificationsMessages.js"></script>
 </body>
 
 </html>
