@@ -19,9 +19,11 @@ class MessageController extends Controller
             'message_content' => 'required'
         ]);
         $request->merge(['to_user_id' => $user->id]);
+        $status = 'store';
 
         $message = Message::create($request->all());
-        $user->notify(new RealTimeNotification($request->message_content, $message->from_user->username));
+        $data = [$request->message_content, $message->from_user->username];
+        $user->notify(new RealTimeNotification($status, $data));
 
         return redirect()->route('single-msg', $username);
     }
@@ -32,7 +34,7 @@ class MessageController extends Controller
         if (!$user || $user->id == Auth::id()) return redirect('/messages');
 
         $messages = Message::where('from_user_id', $user->id)->where('to_user_id', Auth::id())->where('read', 0)->get();
-        $this->markAsRead($messages);
+        $this->markAsRead($messages, $username);
         return response('', 202);
     }
 
@@ -76,7 +78,7 @@ class MessageController extends Controller
             ->whereIn('from_user_id', [Auth::id(), $user->id])
             ->get();
 
-        $this->markAsRead($messages);
+        $this->markAsRead($messages, $username);
 
         return view('messages.viewSingle', [
             'messages' => $messages,
@@ -84,13 +86,22 @@ class MessageController extends Controller
         ]);
     }
 
-    public function markAsRead($messages)
+    public function markAsRead($messages, $username)
     {
         $notOwnMessages = $messages->filter(function ($msg) {
             if ($msg->from_user_id != Auth::id() && $msg->read === 0) return $msg;
         });
+
         foreach ($notOwnMessages as $n) {
             $n->update(['read' => 1]);
         }
+
+        if(!count($notOwnMessages) > 0) return;
+        
+        $status = 'read';
+        $data = ['', $username];
+
+        $user = User::where('username', $username)->first();
+        $user->notify(new RealTimeNotification($status, $data));
     }
 }

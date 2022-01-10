@@ -1,5 +1,6 @@
-const newMsg = document.getElementById('new-msg')
 const titleSection = document.getElementById('titleSection')
+const usernameInputField = document.getElementById('needle')
+const newMsg = document.getElementById('new-msg')
 newMsg.style = 'right:0;top:-' + (parseInt(titleSection.offsetTop) - 5) + 'px'
 
 async function findUsername(event) {
@@ -25,5 +26,4 @@ function displayUsernames(usernames) {
     }
 }
 
-const usernameInputField = document.getElementById('needle')
 usernameInputField.addEventListener('keyup', findUsername)

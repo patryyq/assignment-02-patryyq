@@ -13,17 +13,16 @@
                 @if ($message->from_user_id === Auth::id())
                     <div class="m-3 col-8 float_right">
                         <div>
-                            <b>Me</b>, {{ $message->created_at->diffForHumans() }}
+                            <b>Me</b>, {{ $message->created_at->diffForHumans(null, true) }}
                         </div>
                         <div class="bg-info p-3 position-relative rounded">
                             {{ $message->message_content }}
                             @if ($message->read === 0)
-                                <i class="fas fa-check" style="position:absolute;right:10px;bottom:-20px;font-size:1rem"
-                                    title="Message unread"></i>
+                                <i class="fas fa-check"
+                                    style="position:absolute;right:10px;bottom:-20px;font-size:1rem"></i>
                             @else
                                 <i class="fas fa-check-double"
-                                    style="position:absolute;right:10px;bottom:-20px;font-size:1rem"
-                                    title="Message read"></i>
+                                    style="position:absolute;right:10px;bottom:-20px;font-size:1rem"></i>
                             @endif
                         </div>
                     </div>
@@ -32,7 +31,7 @@
                         <div>
                             <b><a
                                     href="/user/{{ $message->from_user->username }}">{{ $message->from_user->username }}</a></b>,
-                            {{ $message->created_at->diffForHumans() }}
+                            {{ $message->created_at->diffForHumans(null, true) }}
                         </div>
                         <div class="bg-light p-3 rounded">
                             {{ $message->message_content }}

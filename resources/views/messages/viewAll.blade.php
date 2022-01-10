@@ -17,13 +17,15 @@
                         @else
                             <a href="/messages/{{ $message->to_user->username }}">
                     @endif
-
-                    @if (strlen($message->message_content) >= 45)
-                        {{ substr($message->message_content, 0, 45) . '...' }}
-                    @else
-                        {{ $message->message_content }}
-                    @endif
-                    </a>, {{ $message->created_at->diffForHumans() }}
+                    {{ $message->created_at->diffForHumans(null, true) }}
+                    <span style="color:#212529;">
+                        @if (strlen($message->message_content) >= 45)
+                            {{ substr($message->message_content, 0, 45) . '...' }}
+                        @else
+                            , "{{ $message->message_content }}"
+                        @endif
+                    </span>
+                    </a>
                     @if ($message->from_user_id != Auth::id() && $message->read == 0)
                         </b>
                     @endif

@@ -10,12 +10,12 @@ class RealTimeNotification extends Notification implements ShouldBroadcast
 {
 
     public string $message;
-    public string $username;
+    public array $data;
 
-    public function __construct(string $message, string $username)
+    public function __construct(string $status, array $data)
     {
-        $this->message = $message;
-        $this->username = $username;
+        $this->status = $status;
+        $this->data = $data;
     }
 
     public function via($notifiable): array
@@ -26,8 +26,8 @@ class RealTimeNotification extends Notification implements ShouldBroadcast
     public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
-            'message' => $this->message,
-            'user' => $this->username
+            'status' => $this->status,
+            'data' => $this->data
         ]);
     }
 }
