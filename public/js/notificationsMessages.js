@@ -3,21 +3,26 @@ var firstNewMessage = true
 var newMsgCount = 0
 
 function displayNotification(data) {
-    let exist = document.getElementById('notificationBox')
-    if (exist != undefined) {
-        exist.remove()
-        clearTimeout(timeout)
+    if (data[0] === 'store') {
+        let exist = document.getElementById('notificationBox')
+        if (exist != undefined) {
+            exist.remove()
+            clearTimeout(timeout)
+        }
+
+        changeUnreadMessageCount()
+        appendOtherMessage(data)
+        if (isNewMessageFromCurrentConversation(data[1][1])) return
+
+        const body = document.getElementsByTagName('body')[0]
+        const alertBox = renderAlertBox(data);
+        body.appendChild(alertBox)
+
+        timeout = setTimeout(closeNotification, 6000)
+    } else if (data[0] === 'read') {
+        const ticks = document.getElementsByClassName('fas fa-check')
+        for (let i = 0; i < ticks.length; ++i) ticks[i].attributes.class.value = 'fas fa-check-double fas fa-check'
     }
-
-    changeUnreadMessageCount()
-    appendOtherMessage(data)
-    if (isNewMessageFromCurrentConversation(data[1])) return
-
-    const body = document.getElementsByTagName('body')[0]
-    const alertBox = renderAlertBox(data);
-    body.appendChild(alertBox)
-
-    timeout = setTimeout(closeNotification, 6000)
 }
 
 function closeNotification() {
@@ -37,22 +42,22 @@ function removeNewMessageLine() {
     const titleSection = document.getElementById('titleSection')
     const username = titleSection.firstElementChild.firstElementChild.innerText.split(': ')[1]
     const newMsgLine = document.getElementById('hrNewMsg')
+
     if (newMsgLine != undefined) {
+        const newMessages = document.getElementsByClassName('new-msg')
+        for (let i = 0; i < newMessages.length; ++i) newMessages[i].attributes.class.value = 'bg-light p-3 rounded new-msg'
         newMsgLine.remove()
         firstNewMessage = true
         changeUnreadMessageCount(newMsgCount)
-        newMsgCount = 0;
         sendRequestToMarkAsRead(username)
+        newMsgCount = 0
     }
 }
 
 async function sendRequestToMarkAsRead(username) {
     const url = '/msg-read/' + username
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content')
-
-    const response = await fetch(url, { method: 'POST', headers: { 'X-CSRF-Token': csrfToken } })
-    const data = await response.text();
-    console.log(data)
+    await fetch(url, { method: 'POST', headers: { 'X-CSRF-Token': csrfToken } })
 }
 
 function changeUnreadMessageCount(decrease = false) {
@@ -61,14 +66,14 @@ function changeUnreadMessageCount(decrease = false) {
 }
 
 function appendOtherMessage(data) {
-    if (!isNewMessageFromCurrentConversation(data[1])) return
+    if (!isNewMessageFromCurrentConversation(data[1][1])) return
+
     const msgBox = document.getElementById('msg-box')
     if (firstNewMessage) displayLineAboveNewMsgs(msgBox)
 
     const message = renderMessage(data)
     msgBox.appendChild(message)
     msgBox.scrollTop = msgBox.scrollHeight
-
     ++newMsgCount
 }
 
@@ -79,11 +84,11 @@ function renderMessage(data) {
     const div = document.createElement('div')
     const divText = document.createElement('div')
 
-    a.setAttribute('href', '/messages/' + data[1])
-    a.innerText = data[1]
+    a.setAttribute('href', '/messages/' + data[1][1])
+    a.innerText = data[1][1]
     divOuter.setAttribute('class', 'm-3 col-8 float_left')
-    divText.setAttribute('class', 'bg-light p-3 rounded')
-    divText.innerText = data[0]
+    divText.setAttribute('class', 'bg-light p-3 rounded border border-4 new-msg')
+    divText.innerText = data[1][0]
 
     b.appendChild(a)
     div.appendChild(b)
@@ -99,14 +104,14 @@ function renderAlertBox(data) {
     const a = document.createElement('a')
     const b = document.createElement('a')
 
-    a.setAttribute('href', '/messages/' + data[1])
+    a.setAttribute('href', '/messages/' + data[1][1])
     a.setAttribute('class', 'alert-link')
-    b.setAttribute('href', '/messages/' + data[1])
+    b.setAttribute('href', '/messages/' + data[1][1])
     b.setAttribute('class', 'alert-link')
     b.setAttribute('style', 'text-decoration: underline;font-size:1.1rem')
-    a.innerText = data[0].length > 30 ? data[0].substring(0, 30) + '...' : data[0]
-    b.innerText = data[1]
-    div.setAttribute('class', 'alert alert-warning alert-dismissible border')
+    a.innerText = data[1][0].length > 30 ? data[1][0].substring(0, 30) + '...' : data[1][0]
+    b.innerText = data[1][1]
+    div.setAttribute('class', 'alert alert-info alert-dismissible border')
     div.setAttribute('style', 'margin: 0 auto; bottom: 30px;width: fit-content;position:fixed;left:0;right:0;padding:1rem 5rem 1rem 3rem')
     div.setAttribute('role', 'alert')
     div.setAttribute('id', 'notificationBox')
@@ -139,3 +144,5 @@ function displayLineAboveNewMsgs(msgBox) {
 }
 
 window.addEventListener('click', removeNewMessageLine)
+const msgInput = document.getElementById('message_content')
+if (msgInput != undefined) msgInput.focus()

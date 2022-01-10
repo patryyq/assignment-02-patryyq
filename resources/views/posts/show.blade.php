@@ -14,7 +14,7 @@
                 <div class="p-3 align-items-center">
                     <h5 class="m-0 p-0">&#64;<a
                             href="/user/{{ $post->user->username }}">{{ $post->user->username }}</a>,
-                        <a href="/post/{{ $post->id }}">{{ $post->created_at->diffForHumans() }}</a>
+                        <a href="/post/{{ $post->id }}">{{ $post->created_at->diffForHumans(null, true) }}</a>
                     </h5>
                 </div>
                 <div class="d-flex flex-row">
@@ -72,7 +72,7 @@
             @foreach ($post->comment as $pst)
                 <div class="border p-3 mb-3">&#64;<b><a
                             href="/user/{{ $pst->user->username }}">{{ $pst->user->username }}</a></b>,
-                    {{ $pst->created_at->diffForHumans() }}<br>{{ $pst->comment_content }}<br><br>
+                    {{ $pst->created_at->diffForHumans(null, true) }}<br>{{ $pst->comment_content }}<br><br>
                     @if (Auth::check() && ($pst->user_id === Auth::id() || Auth::user()->admin_role == 1))
                         <form class="d-flex justify-content-end mt-2" action="{{ route('comment.destroy', $pst->id) }}"
                             method="POST">

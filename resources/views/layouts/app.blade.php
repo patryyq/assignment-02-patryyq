@@ -82,7 +82,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script>Echo.private('App.Models.User.{{Auth::id()}}')
     .notification((notification) => {
-        let data = [notification.message, notification.user];
+        let data = [notification.status, notification.data];
         displayNotification(data)
         return data;
     });
