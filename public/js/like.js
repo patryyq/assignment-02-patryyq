@@ -21,5 +21,5 @@ function likePost(event) {
     }
 }
 
-const content = document.getElementsByClassName('content')[0]
+const content = document.getElementsByClassName('content')[1]
 content.addEventListener('click', likePost)

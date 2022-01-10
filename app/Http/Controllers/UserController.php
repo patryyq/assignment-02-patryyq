@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Follower;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -37,9 +38,19 @@ class UserController extends Controller
             ->where('username', '!=', Auth::user()->username)
             ->get();
         if ($matchingUsernames) {
-            return response($matchingUsernames, 200);;
+            return response($matchingUsernames, 200);
         } else {
             return response('', 401);
         }
+    }
+
+    public function uploadProfilePicture(Request $request)
+    {
+        if($request->hasFile('image')){
+            $filename = $request->image->getClientOriginalName();
+            $request->image->storeAs('images',$filename,'public');
+            Auth::user()->update(['avatar_path'=>$filename]);
+        }
+        return redirect()->back();
     }
 }

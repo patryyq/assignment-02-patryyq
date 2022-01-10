@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Direct Messages')
-
+@section('title')
+    <h2 class="m-2">Direct Messages</h2>
+@endsection
 @section('content')
     <div class="mt-4 position-relative">
         <button type="button" data-bs-toggle="modal" data-bs-target="#newMessageModal"
@@ -64,5 +65,6 @@
                 </div>
             </div>
         </div>
-        <script src="/js/viewAllMessages.js"></script>
-    @endsection
+    </div>
+    <script src="/js/viewAllMessages.js"></script>
+@endsection

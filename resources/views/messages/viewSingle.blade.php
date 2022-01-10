@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@section('title', 'DM with: ' . $username)
-
+@section('title')
+    <h2>DM with: @<b style="text-decoration:undeline">{{ $username }}</b></h2>
+@endsection
 @section('content')
     <div class="mt-4 col-12 border">
         <div id="msg-box" class="pb-5" style="overflow-y:scroll;font-size:0.9rem">
