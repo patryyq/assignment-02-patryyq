@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Edit post')
-
+@section('title')
+    <h2 class="m-2">Edit post</h2>
+@endsection
 @section('content')
     <form action="{{ route('posts.update', $post->id) }}" method="POST">
         @csrf

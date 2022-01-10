@@ -65,5 +65,6 @@
                 </div>
             </div>
         </div>
-        <script src="/js/viewAllMessages.js"></script>
-    @endsection
+    </div>
+    <script src="/js/viewAllMessages.js"></script>
+@endsection

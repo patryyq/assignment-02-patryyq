@@ -14,9 +14,10 @@
     <div class="mb-5">
         <div class="d-flex flex-row col-md-12 bg-info justify-content-between align-items-center px-3">
             <div class="p-3 align-items-center">
-                <h5 class="m-0 p-0">&#64;<a
-                        href="/user/{{ $post->user->username }}">{{ $post->user->username }}</a>,
-                    <a href="/post/{{ $post->id }}">{{ $post->created_at->diffForHumans(null, true) }}</a>
+                <h5 class="m-0 p-0 text-white">&#64;<b><a class="text-white"
+                            href="/user/{{ $post->user->username }}">{{ $post->user->username }}</a>,
+                        <a class="text-white"
+                            href="/post/{{ $post->id }}">{{ $post->created_at->diffForHumans(null, true) }}</a></b>
                 </h5>
             </div>
             <div class="d-flex flex-row">

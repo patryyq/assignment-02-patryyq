@@ -29,7 +29,8 @@ class PostController extends Controller
 
         return view('posts.main', [
             'posts' => $posts,
-            'title' => $title
+            'title' => $title,
+            'page' => 'main'
         ]);
     }
 
@@ -48,7 +49,8 @@ class PostController extends Controller
 
         return view('posts.main', [
             'posts' => $posts,
-            'title' => $title
+            'title' => $title,
+            'page' => 'feed'
         ]);
     }
 
@@ -70,6 +72,7 @@ class PostController extends Controller
             'posts' => $posts,
             'title' => $username,
             'user' => $usr,
+            'page' => 'user',
             'following' => $following
         ]);
     }

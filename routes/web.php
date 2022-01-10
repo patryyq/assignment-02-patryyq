@@ -35,3 +35,4 @@ Route::get('/messages/{username}', [MessageController::class, 'viewSingle'])->mi
 Route::post('/msg/{username}', [MessageController::class, 'store'])->middleware('auth')->name('send-msg');
 Route::post('/msg-read/{username}', [MessageController::class, 'markAsReadJS'])->middleware('auth')->name('mark-as-read');
 Route::get('/username/{needle}', [UserController::class, 'findMatchingUsernames'])->middleware('auth');
+Route::post('/upload-image', [UserController::class, 'uploadProfilePicture'])->middleware('auth')->name('upload-image');
