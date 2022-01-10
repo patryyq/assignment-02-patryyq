@@ -15,10 +15,9 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->unique()->firstName() . '_'  . Str::random(5),
             'email' => $this->faker->unique()->safeEmail(),
-            'avatar_path' => 'path/to/image.jpg',
+            'avatar_path' => 'default/' . random_int(1, 11) . '.jpg',
             'description' => $this->faker->realText(100),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password = password
-            'admin_role' => '0'
         ];
     }
 }

@@ -22,7 +22,7 @@
                 </a>
                 @if (!Auth::guest())
                     <a href="/messages"><i class="far fa-comment-alt" aria-hidden="true" style="color:white">
-                            <span id="msgCount" 
+                            <span id="msgCount"
                                 class="position-absolute bottom-0 right-0 translate-middle badge rounded-pill bg-danger">
                                 {{ App\Models\Message::where('read', 0)->where('to_user_id', Auth::id())->get()->count() }}
                             </span></i></a>
@@ -43,30 +43,37 @@
             @endif
         </ul>
     </div>
-    <section id="titleSection" class="pageTitle mx-auto col-12 py-4 bg-light border-bottom">
-        <div
-            class="container mx-auto col-xl-7 col-md-12 col-xs-12 d-flex flex-row justify-content-between align-items-center">
-            <h2 class="mb-0 py-0">@yield('title')</h2>
-            @if (isset($following))
-                <div class="p-3 position-relative">
-                    @if ($user->id != Auth::id())
-                        <button name="send_dm" id="{{ $title }}" type="button"
-                            class="btn btn-outline-dark follow @if (Auth::guest())guest @endif">Send DM
-                        </button>
-                    @endif
-
-                    @if (isset($following->id))
-                        <button id="{{ $user->id }}" type="button"
-                            class="btn btn-dark follow @if (Auth::guest())guest @endif">Following</button>
-                    @else
-                        <button id="{{ $user->id }}" type="button"
-                            class="btn btn-outline-dark follow @if (Auth::guest())guest @endif">Follow</button>
-                    @endif
-                    <span class="position-absolute bottom-0 right-0 translate-middle badge rounded-pill bg-danger">
-                        {{ $user->followed->count() }}
-                    </span>
+    <section id="titleSection" class="pageTitle mx-auto col-12 pb-2 pt-3 bg-light border-bottom">
+        <div class="content mx-auto col-xl-7 col-md-10">
+            <div class="row d-flex flex-direction-column g-0">
+                <div class="col-12 col-md-8 p-2">
+                    @yield('title')
                 </div>
-            @endif
+                <div class="col-8 mx-auto col-md-4">
+                    @if (isset($following))
+                        <div class="p-3 position-relative d-flex flex-wrap"
+                            style="flex-direction: column;align-content: stretch;">
+                            @if ($user->id != Auth::id())
+                                <button name="send_dm" id="{{ $title }}" type="button"
+                                    class="m-2 btn btn-outline-dark follow @if (Auth::guest())guest @endif">Send DM
+                                </button>
+                            @endif
+
+                            @if (isset($following->id))
+                                <button id="{{ $user->id }}" type="button"
+                                    class="m-2 btn btn-dark follow @if (Auth::guest())guest @endif">Following</button>
+                            @else
+                                <button id="{{ $user->id }}" type="button"
+                                    class="btn btn-outline-dark follow @if (Auth::guest())guest @endif">Follow</button>
+                            @endif
+                            <span class="position-absolute bottom-0 translate-middle badge rounded-pill bg-danger"
+                                style="right:0">
+                                {{ $user->followed->count() }}
+                            </span>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </section>
 
@@ -79,24 +86,24 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script>Echo.private('App.Models.User.{{Auth::id()}}')
-    .notification((notification) => {
-        let data = [notification.status, notification.data];
-        displayNotification(data)
-        return data;
-    });
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        Echo.private('App.Models.User.{{ Auth::id() }}')
+            .notification((notification) => {
+                let data = [notification.status, notification.data];
+                displayNotification(data)
+                return data;
+            });
 
-//     // Example 1 - Event Channel
-//     Echo.channel('events')
-//         .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
+        //     // Example 1 - Event Channel
+        //     Echo.channel('events')
+        //         .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
 
-//   //  Example 2 - Private Event Channel
-//     Echo.private('events')
-//         .listen('RealTimeMessage', (e) => console.log('Private RealTimeMessage: ' + e.message));
-
-</script>
-<script src="/js/notificationsMessages.js"></script>
+        //   //  Example 2 - Private Event Channel
+        //     Echo.private('events')
+        //         .listen('RealTimeMessage', (e) => console.log('Private RealTimeMessage: ' + e.message));
+    </script>
+    <script src="/js/notificationsMessages.js"></script>
 </body>
 
 </html>

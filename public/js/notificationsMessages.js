@@ -33,14 +33,14 @@ function closeNotification() {
 
 function isNewMessageFromCurrentConversation(currentUser) {
     const titleSection = document.getElementById('titleSection')
-    const title = titleSection.firstElementChild.firstElementChild.innerText.split(': ')[1]
+    const title = titleSection.firstElementChild.firstElementChild.innerText.split(': @')[1]
 
     return (title != undefined && title == currentUser) ? true : false
 }
 
 function removeNewMessageLine() {
     const titleSection = document.getElementById('titleSection')
-    const username = titleSection.firstElementChild.firstElementChild.innerText.split(': ')[1]
+    const username = titleSection.firstElementChild.firstElementChild.innerText.split(': @')[1]
     const newMsgLine = document.getElementById('hrNewMsg')
 
     if (newMsgLine != undefined) {
