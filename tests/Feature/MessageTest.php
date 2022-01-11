@@ -85,13 +85,13 @@ class MessageTest extends TestCase
 
     public function test_mark_message_as_read_auth()
     {
-        $this->getUser('auth');
         $user = $this->getUser('auth');
-        Message::factory()->count(1)->create([
-            'from_user_id' => $user->id
+        $user2 = $this->getUser();
+        Message::create([
+            'to_user_id' => $user2->id
         ]);
 
-        $this->get('/messages/' . $user->username);
-        $this->assertDatabaseHas('messages', ['to_user_id' => $user->id, 'read' => 1]);
+        $this->actingAs($user2)->get('/messages/' . $user->username);
+        $this->assertDatabaseHas('messages', ['to_user_id' => $user2->id, 'read' => 1]);
     }
 }
