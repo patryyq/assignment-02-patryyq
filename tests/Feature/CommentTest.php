@@ -10,7 +10,7 @@ class CommentTest extends TestCase
 {
     public function test_comment_added_succesfully_and_present_in_db_auth()
     {
-        $user = $this->getUser(true);
+        $user = $this->getUser('auth');
         $post = Post::factory(1)->create();
         $commentDetails = ['post_id' => $post[0]->id, 'comment_content' => 'test comment'];
 
@@ -31,7 +31,7 @@ class CommentTest extends TestCase
 
     public function test_comment_not_added_wrong_post_id_auth()
     {
-        $user = $this->getUser(true);
+        $user = $this->getUser('auth');
         $postID = rand(5000, 15000);
         $commentDetails = ['post_id' => $postID, 'comment_content' => 'test comment'];
 
@@ -41,7 +41,7 @@ class CommentTest extends TestCase
 
     public function test_comment_update_proceeds_auth()
     {
-        $user = $this->getUser(true);
+        $user = $this->getUser('auth');
         $post = Post::factory(1)->create(['user_id' => $user->id]);
         $comment = Comment::factory(1)->create(['post_id' => $post[0]->id]);
         $oldComment = $comment[0]->comment_content;
@@ -69,7 +69,7 @@ class CommentTest extends TestCase
 
     public function test_comment_delete_proceedes_auth()
     {
-        $user = $this->getUser(true);
+        $user = $this->getUser('auth');
         $post = Post::factory(1)->create(['user_id' => $user->id]);
         $comment = Comment::factory(1)->create(['post_id' => $post[0]->id]);
         $commentID = $comment[0]->id;

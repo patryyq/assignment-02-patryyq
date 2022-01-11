@@ -27,10 +27,11 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (Hash::check($request->password, $user->password)) {
+        if ($user != null && Hash::check($request->password, $user->password)) {
             $cred = ['password' => $request->password, 'email' => $request->email];
             $code = Str::random(6);
             Token::updateOrCreate(['user_id' => $user->id], ['user_id' => $user->id, 'code_2fa' => $code, 'code_2fa_updated_at' => now()]);
+
             return redirect('/login')->with('status', ['code' => $code, 'status' => 1, 'req' => $cred]);
         }
 

@@ -14,7 +14,7 @@ abstract class TestCase extends BaseTestCase
     public function getUser($auth = false)
     {
         $user = User::factory(1)->create()[0];
-        if ($auth) {
+        if ($auth === 'auth') {
             $this->actingAs($user);
             $this->assertAuthenticated();
         }

@@ -46,10 +46,10 @@ class UserController extends Controller
 
     public function uploadProfilePicture(Request $request)
     {
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $filename = $request->image->getClientOriginalName();
-            $request->image->storeAs('images',$filename,'public');
-            Auth::user()->update(['avatar_path'=>$filename]);
+            $request->image->storeAs('images', $filename, 'public');
+            Auth::user()->update(['avatar_path' => $filename]);
         }
         return redirect()->back();
     }
