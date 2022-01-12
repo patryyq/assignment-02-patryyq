@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('title')
 
-    @if (isset($user))
+    @if (isset($user) && $user != null)
         <div class="d-flex">
             <div class="col-4 position-relative" style="width: 115px;height: 115px">
                 <img class="image rounded-circle" src="{{ asset('storage/images/' . $user->avatar_path) }}"
                     alt="profile_image" style="width: 100%;height: 100%">
-                @if (Auth::user()->username === $user->username)
+                @if (Auth::check() && Auth::user()->username === $user->username)
                     <div id="changeProfileImageButton" class="position-absolute" style="right:2px;bottom:2px;cursor:pointer"
                         data-bs-toggle="modal" data-bs-target="#newMessageModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#fff"
@@ -53,9 +53,9 @@
             </div>
         </form>
     @endif
-    @if (count($posts) === 0 && $page === 'user' && Auth::user()->username === $title)
+    @if (Auth::check() && count($posts) === 0 && $page === 'user' && Auth::user()->username === $title)
         <h2>No posts to display. Write your first post!</h2>
-    @elseif (count($posts) === 0 && $page === 'user' && Auth::user()->username != $title)
+    @elseif (Auth::check() && count($posts) === 0 && $page === 'user' && Auth::user()->username != $title)
         <h2>No posts to display. This user has not written any post yet.</h2>
     @elseif (count($posts) === 0 && $page === 'main')
         <h2>No posts in DB. Run migrations</h2>
@@ -108,7 +108,7 @@
         </div>
     @endforeach
     </div>
-    @if (isset($user) && Auth::user()->username === $user->username)
+    @if (Auth::check() && isset($user) && Auth::user()->username === $user->username)
         <div class="modal fade" id="newMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
