@@ -46,6 +46,19 @@ class PostTest extends TestCase
         $this->assertNotEquals($oldPost, $updatedPost);
     }
 
+    public function test_not_authorised_user_can_not_post_update()
+    {
+        $user = $this->getUser();
+        $post = Post::factory(1)->create(['user_id' => $user->id]);
+        $oldPost = $post[0]->post_content;
+        $postID = $post[0]->id;
+        $postDetails = ['_method' => "PUT", '_token' => csrf_token(), 'post_content' => 'updated post content'];
+
+        $this->post('posts/' . $postID, $postDetails)->assertStatus(302);
+        $updatedPost = Post::find($postID)->first()->post_content;
+        $this->assertEquals($oldPost, $updatedPost);
+    }
+
     public function test_authorised_user_can_post_delete()
     {
         $user = $this->getUser('auth');
@@ -57,7 +70,7 @@ class PostTest extends TestCase
         $this->assertDatabaseMissing('posts', ['id' => $postID]);
     }
 
-    public function test_not_authorised_user_can_post_delete()
+    public function test_not_authorised_user_can_not_post_delete()
     {
         $user = $this->getUser('not auth');
         $post = Post::factory(1)->create(['user_id' => $user->id]);
