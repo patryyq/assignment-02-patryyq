@@ -9,8 +9,8 @@ class FollowerTest extends TestCase
 {
     public function test_successful_follow()
     {
-        $this->getUser(true);
-        $user_2 = $this->getUser();
+        $this->getUser('auth');
+        $user_2 = $this->getUser('not auth');
         $followerDetails = ['followed_user_id' => $user_2->id];
 
         $this->post('/follower/' . $user_2->id, $followerDetails)->assertStatus(201);
@@ -19,8 +19,8 @@ class FollowerTest extends TestCase
 
     public function test_unsuccessful_follow_unauth()
     {
-        $this->getUser();
-        $user_2 = $this->getUser();
+        $this->getUser('not auth');
+        $user_2 = $this->getUser('not auth');
         $followerDetails = ['followed_user_id' => $user_2->id];
 
         $this->post('/follower/' . $user_2->id,  $followerDetails)->assertStatus(302);
@@ -29,8 +29,8 @@ class FollowerTest extends TestCase
 
     public function test_successful_unfollow()
     {
-        $this->getUser(true);
-        $user_2 = $this->getUser();
+        $this->getUser('auth');
+        $user_2 = $this->getUser('not auth');
 
         $followerDetails = ['followed_user_id' => $user_2->id];
         $follower = Follower::factory()->create($followerDetails);
