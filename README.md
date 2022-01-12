@@ -17,6 +17,8 @@ This project is based on a PHP framework - Laravel 8. To work properly it needs 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ZrtqsJIGuzM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/ZrtqsJIGuzM/0.jpg)](https://www.youtube.com/watch?v=ZrtqsJIGuzM)
+
 ## 1. Clone the repo
 The first step, is to clone the repo by using the following command:
 ```
