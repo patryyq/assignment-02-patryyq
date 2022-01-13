@@ -12,7 +12,7 @@ class LikeTest extends TestCase
 {
     public function test_successful_like_auth()
     {
-        $user = $this->getUser(true);
+        $user = $this->getUser('auth');
         $post = Post::factory()->create();
         $likeDetails = ['post_id' => $post->id];
 
@@ -22,7 +22,7 @@ class LikeTest extends TestCase
 
     public function test_unsuccessful_like_unauth()
     {
-        $user = $this->getUser();
+        $user = $this->getUser('not auth');
         $post = Post::factory()->create();
         $likeDetails = ['post_id' => $post->id];
 
@@ -32,7 +32,7 @@ class LikeTest extends TestCase
 
     public function test_successful_unlike_auth()
     {
-        $user = $this->getUser(true);
+        $user = $this->getUser('auth');
         $post = Post::factory()->create();
         $likeDetails = ['post_id' => $post->id];
         $like = Like::factory()->create($likeDetails);

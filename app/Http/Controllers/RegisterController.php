@@ -1,11 +1,9 @@
 <?php
-// this class is from Adding authentication.docx - available in Week 5 practical
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -20,7 +18,7 @@ class RegisterController extends Controller
         $request->validate([
             'username' => ['required', 'unique:users', 'min:3', 'max:15'],
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:6']
+            'password' => ['required', 'min:8']
         ]);
 
         $registerData = [
@@ -28,11 +26,8 @@ class RegisterController extends Controller
             'password' => Hash::make($request->input('password')),
             'admin_role' => '0',
             'email' => $request->email,
-            'avatar_path' => 'path/to/image.jpg',
-            'description' => 'Some description here.',
-            'email_verified_at' => now(),
-            'code_2fa' => Str::random(5),
-            'remember_token' => Str::random(20)
+            'avatar_path' => 'default/default_profile_image.png',
+            'description' => 'Some default description here.'
         ];
 
         $user = User::create($registerData);
