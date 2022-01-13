@@ -1,5 +1,5 @@
 # **Twitter-like** - Laravel driven website
-### **Advanced Web Programming (CHT2520), assignment-01 (Nov. 2021), University of Huddersfield** 
+### **Advanced Web Programming (CHT2520), assignment-01 (Jan. 2022), University of Huddersfield** 
 **Patryk Świder, u1971957**
 
 # **About the project**
@@ -128,7 +128,7 @@ password: password
 ```
 ## **Features:**
 ## Features video #1
-[![IMAGE ALT TEXT HERE](screenshots/features.video2.png)](https://www.youtube.com/watch?v=ToTrgtu6ak8)
+[![IMAGE ALT TEXT HERE](screenshots/features.video2.png)](https://www.youtube.com/watch?v=iB4KGAsnGBs)
 
 ## Features video #2
 [![IMAGE ALT TEXT HERE](screenshots/features.video.png)](https://www.youtube.com/watch?v=x6SyZ-mx1xY)
@@ -164,9 +164,9 @@ password: password
 
 ## 2. Laravel websockets:
 
-### beyondco.de, 2021. [Used this article to make upload image feature. ](https://beyondco.de/docs/laravel-websockets/getting-started/introduction "Used this article to make websockets. ")
+### beyondco.de, 2021. [Laravel websockets package. ](https://beyondco.de/docs/laravel-websockets/getting-started/introduction "Used this article to make websockets. ")
 
-### christoph-rumpel.com, 2020. [Used this article to make upload image feature. ](https://christoph-rumpel.com/2020/11/laravel-real-time-notifications "Laravel Real-Time Notifications")
+### christoph-rumpel.com, 2020. [Websockets tutorial. ](https://christoph-rumpel.com/2020/11/laravel-real-time-notifications "Laravel Real-Time Notifications")
 
 
 # **Reflections**
